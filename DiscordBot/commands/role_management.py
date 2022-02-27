@@ -65,4 +65,16 @@ async def _kick_all(ctx: context) -> None:
     await ctx.send(f"Fin de l'opération. {expulsed} personnes ont été éjectées du serveur")
 
 
-bot_commands = [_check_same_role, _del_same_role, _give_role, _remove_role]
+@bot.command(name='removeAllFromRole')
+@admin_command()
+async def _remove_all_from_role(ctx: context, *args):
+    if len(args) != 1 and not ctx.message.role_mentions:
+        await ctx.send(":warning: Erreur. La syntaxe est `@removeAllFromRole @role`. Le rôle doit exister !")
+        return
+    role: discord.Role = args[0]
+    for member in role.members:
+        member.remove_roles(role)
+    await ctx.message.add_reaction('✅')
+
+
+bot_commands = [_check_same_role, _del_same_role, _give_role, _remove_role, _remove_all_from_role, _kick_all]

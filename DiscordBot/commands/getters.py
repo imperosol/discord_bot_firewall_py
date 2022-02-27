@@ -11,7 +11,9 @@ async def _get_nb(ctx: context, *args) -> None:
     """
     Send a Discord message to the same channel where the command was made with the number of
     member having the role specified in the arguments of the command.
-    Example: ::
+
+    Example:
+    ::
         @getNb @GE21
     :param ctx: the discord context in which the command is written
     :param args: one argument : either the id of the role  or a mention of this role
@@ -32,6 +34,15 @@ async def _get_nb(ctx: context, *args) -> None:
 @bot.command(name='getRoles')
 @admin_command()
 async def _get_roles(ctx: context, *args) -> None:
+    """
+    Given an integer number, send a discord message with all the roles that are held by this number of members.
+
+    Syntax:
+    ::
+        @getRoles <integer number>
+    :param ctx: the discord context of the command
+    :param args: the arguments. For the command to be effective, there must be exactly one argument : an integer
+    """
     if len(args) != 1:
         await ctx.send(":warning:  Erreur. La syntaxe est `@getRoles NombreDePersonnes`")
         return
@@ -49,6 +60,14 @@ async def _get_roles(ctx: context, *args) -> None:
 @bot.command(name='getZeroOne')
 @admin_command()
 async def _get_zero_one(ctx: context) -> None:
+    """
+    Send a Discord message with the list of all roles that are held by zero or one member
+
+    Syntax:
+    ::
+        @getZeroOne
+    :param ctx: the discord context of the command
+    """
     roles = [role.name for role in ctx.guild.roles if len(role.members) < 2]
     if len(roles) == 0:
         await ctx.send("Aucun rôle trouvé")
@@ -59,6 +78,11 @@ async def _get_zero_one(ctx: context) -> None:
 @bot.command(name='getUrl')
 @admin_command()
 async def _get_url(ctx: context) -> None:
+    """
+    Send a Discord message with the url of the bot and an invitation link.
+
+    :param ctx: the discord context of the command
+    """
     await ctx.send(f"URL de connexion (à transmettre) : {BOT_URL}\n\n"
                    f"Le lien d'invitation direct (peu recommandé) : {INVITATION_LINK}")
 
@@ -66,6 +90,14 @@ async def _get_url(ctx: context) -> None:
 @bot.command(name='getMemeberRoles')
 @admin_command()
 async def _get_member_roles(ctx: context, *args) -> None:
+    """
+    Displays the list of roles of a member, even if the member is not logged in
+    (useful for servers > 1000 members)
+    
+    :param ctx: the discord context of the command
+    :param args: the arguments. For the command to be effective, there must be exactly one argument :
+        the mention of the member we want to get the roles of
+    """
     if len(args) != 1 or not ctx.message.mentions:
         await ctx.send(":warning: La syntaxe de cette commande est `@getMemberRoles @membre`")
         return
