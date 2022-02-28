@@ -157,9 +157,9 @@ async def _del_all_ues(ctx: context) -> None:
         @delAllUes
     :param ctx: the discord context of the command
     """
-    ue_categories = 'TC', 'ISI', 'RT', 'GI', 'GM', 'MTE', 'A2I', 'MM', 'ME', 'EC', 'HT', 'PAIP'
-    discord_categories = [cat.name for cat in ctx.guild.categories]
-    categories = [cat for cat in discord_categories if cat in ue_categories]
+    ue_categories = {'TC', 'ISI', 'RT', 'GI', 'GM', 'MTE', 'A2I', 'MM', 'ME', 'EC', 'HT', 'PAIP'}
+    discord_categories = {cat.name for cat in ctx.guild.categories}
+    categories = ue_categories.intersection(discord_categories)
     for category in categories:
         await _del_ues(ctx, category)
 

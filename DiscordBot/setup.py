@@ -4,6 +4,7 @@ from ressources.env import BOT_TOKEN
 from DiscordBot.commands.channel_management import bot_commands
 from DiscordBot.commands.getters import bot_commands
 from DiscordBot.commands.role_management import bot_commands
+from DiscordBot.events import user_join
 from DiscordBot.bot import bot
 
 
